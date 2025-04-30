@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let's Home</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .main-menu button {
+        display: flex;
+        gap: 20px;
+      }
+      .ad-banner {
+        position: absolute;
+        width: 100%;
+        background-color: #dc3e26;
+        color: #fdfcfc;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 4px 0 4px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .ad-banner h6 {
+        margin: 1px 0 0 0;
+        font-size: 10px;
+        font-weight: normal;
+      }
+      .youtube {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 20px;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <div>
+      <!--홈페이지 메인로고/로그인/사용자ID-->
+      <button>Let's</button>
+      <button>ID</button>
+    </div>
+
+    <!--메뉴-->
+    <div class="main-menu">
+      <ul>
+        <button>스토리</button>
+        <button>커뮤니티</button>
+        <button>여행혜택</button>
+        <button>마이페이지</button>
+      </ul>
+    </div>
+    <!--페이지 안내 이미지-->
+    <div class="about-page">
+      <ul>
+        Story 👉
+      </ul>
+      <img src="/image/travel1.jpg" width="150" height="100" />
+      <img src="/image/travel2.jpg" width="150" height="100" />
+      <img src="/image/travel3.jpg" width="150" height="100" />
+      <img src="/image/travel4.jpg" width="150" height="100" />
+      <img src="/image/travel5.jpg" width="150" height="100" />
+      <!--화살표로 좌우 이동-->
+      <p class="controller">
+        <span class="prev"></span>
+        <span class="next"></span>
+      </p>
+    </div>
+    <!--광고 배너-->
+    <div class="ad-banner">
+      📢산불은 오직 예방만이 최선입니다!📢
+      <h6>🌺봄철 산불조심기간 🐦‍🔥 2025.1.24~5.15</h6>
+    </div>
+    <!--유튜브 광고영상-->
+    <ul>
+      한국관광공사 youtube 👉
+    </ul>
+    <div class="youtube">
+      <iframe
+        width="400"
+        height="200"
+        src="https://www.youtube.com/embed/sng8h9f98Mo"
+        title="Feel the Night of KOREA"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+                     gyroscope; picture-in-picture"
+        allowfullscreen
+      >
+      </iframe>
+      <iframe
+        width="400"
+        height="200"
+        src="https://www.youtube.com/embed/NLxgGRElMbs"
+        title="BUSAN BLUES"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+                     gyroscope; picture-in-picture"
+        allowfullscreen
+      >
+      </iframe>
+    </div>
+    <!--광고 이미지-->
+    <div class="advertising image"></div>
+
+    <footer>
+      <ul>
+        <button>여행 플래너</button>
+        <button>공지사항</button>
+        <button>개인정보 처리방침</button>
+        <button>고객센터</button>
+      </ul>
+      <div class="useage">
+        <h6>
+          이용약관/위치기반서비스 이용약관/저작권
+          보호정책/고객서비스현장/전자우편 무단수집거부
+        </h6>
+      </div>
+    </footer>
+  </body>
+</html>
