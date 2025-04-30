@@ -9,11 +9,29 @@
         padding: 0;
         margin: 0;
       }
+      .main-menu {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+      }
       .main-menu button {
-        width: 140px;
+        width: 100px;
         height: 50px;
         display: flex;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        justify-content: center;
+        align-items: center;
+      }
+      .about-page {
+        display: flex;
+        flex-direction: row;
         gap: 20px;
+        justify-content: center;
       }
       .ad-banner {
         position: absolute;
@@ -24,7 +42,7 @@
         font-size: 14px;
         font-weight: bold;
         padding: 4px 0 4px 0;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
       .ad-banner h6 {
         margin: 1px 0 0 0;
@@ -59,10 +77,10 @@
       </ul>
     </div>
     <!--페이지 안내 이미지-->
+    <ul>
+      Story 👉
+    </ul>
     <div class="about-page">
-      <ul>
-        Story 👉
-      </ul>
       <img src="/image/travel1.jpg" width="150" height="100" />
       <img src="/image/travel2.jpg" width="150" height="100" />
       <img src="/image/travel3.jpg" width="150" height="100" />
@@ -80,9 +98,9 @@
       <h6>🌺봄철 산불조심기간 🐦‍🔥 2025.1.24~5.15</h6>
     </div>
     <!--유튜브 광고영상-->
-    <ul>
+    <!-- <ul>
       한국관광공사 youtube 👉
-    </ul>
+    </ul> -->
     <div class="youtube">
       <iframe
         width="400"
@@ -108,7 +126,7 @@
       </iframe>
     </div>
     <!--광고 이미지-->
-    <div class="advertising image"></div>
+    <div class="advertising-image"></div>
 
     <footer>
       <ul>
