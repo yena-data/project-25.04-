@@ -1,16 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Let's We Story</title>
   </head>
   <body>
-    <header></header>
+    <header>
+      <!--메인(모든 페이지 동일)메뉴-->
+      <nav>
+        <a href="/main">Let's</a>
+        <a href="/weStory">스토리</a>
+        <a href="/community">커뮤니티</a>
+        <a href="/benefits">여행혜택</a>
+        <a href="/mypage">마이페이지</a>
+        <!--로그인 시 아이디 표시, 미로그인 시 로그인 글자로 표시-->
+        <span
+          th:text="${authentication.name != 'anonymousUser'} ? '@' + #authentication.name : '로그인' "
+        >
+        </span>
+      </nav>
+    </header>
     <body>
-      <div>
-        <h2>Let's</h2>
-      </div>
+      <!--story main-->
+      <!-- 작성되는 스토리별 자동 반복-->
+      <main class="story-grid">
+        <!--2개의 스토리 카드 보여주기-->
+        <div th:each="story, stat : ${stories}" th:if="${stat.index}" < 2" class="story-card">
+          <div>
+              <!--작성자 아이디-->
+              <strong th:text="@{${story.username}}">
+              </strong>
+          </div>
+          <div>
+              <!--작성 제목-->
+              <strong th:text="{story.title}"></strong>
+          </div>
+          <div>
+              <!--이미지-->
+              <img th:src="@{'/images' + ${imagePath}}" alt="story image"/>
+          </div>
+          <!--내용-->
+          <p th:text="${story.content}"></p>
+          <!--해시태그-->
+          <span th:text="${story.hastag}"></span>
+          <!--댓글 버튼 누르면 작성 화면 활성화-->
+          <button onclick="toggleComment(this)">댓글</button>
+          <!--활성화된 댓글 입력창-->
+          <div class="comment-section" style="display: none;">
+              <form method="post">
+                    <input type="text" name="comment" placeholder="댓글을 입력하세요"/>
+                    <button type="submit">등록</button>
+              </form>
+              <!--작성된 댓글 리스트-->
+              <div class="comment-list">
+                    <a href="/story/detail" class="detail-link">댓글 더보기</a>
+              </div>
+              <!--삭제-->
+              <form th:action="@{'/story/delete/' + ${story.id}} method="post">
+                    <button type="submit">삭제</button>
+              </form>
+          </div>
+        </div>
+      </main>
+          <script>
+            function toggleComment(button){
+              console.log('toggleComment 함수 호출');
+
+              const storyCard = button.closest('.story-card');
+              console.log('스토리 카드 찾음:',storyCard);
+
+              const commentSection = storyCard.querySelector('.comment-section');
+              console.log('댓글 섹션 찾음:',commentSection);
+
+              if(commentSection){
+
+                if (commentSection.style.display === 'none'){
+                      commentSection.style.display = 'block'; //show
+                } else {
+                  commentSection.style.display = 'none';//hide
+                }
+              } else {
+                console.error('댓글 섹션을 찾을 수 없습니다!');
+              }
+            }
+          </script>
     </body>
     <footer></footer>
   </body>
