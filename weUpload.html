@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Write</title>
+
+    <!--팝업 스타일-->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .hidden {
+        display: none;
+      }
+      .popup,
+      .search-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        background: #f9f9f9;
+        position: absolute;
+        z-index: 1000;
+      }
+      #text-input:focus {
+        color: black;
+      }
+    </style>
+  </head>
+    <header>
+      <!--메인(모든 페이지 동일)메뉴-->
+      <nav>
+        <a href="/main">Let's</a>
+        <a href="/weStory">스토리</a>
+        <a href="/community">커뮤니티</a>
+        <a href="/benefits">여행혜택</a>
+        <a href="/mypage">마이페이지</a>
+        <!--로그인 시 아이디 표시, 미로그인 시 로그인 글자로 표시-->
+        <span
+          th:text="${authentication.name != 'anonymousUser'} ? '@' + #authentication.name : '로그인' "
+        ></span>
+      </nav>
+    </header>
+    
+    <div>
+    <!--스토리 작성 초기 화면-->
+    <input
+      id="text-input"
+      type="text"
+      value="당신의 이야기를 기다리고 있어요."
+      onclick="clearInput(this)"/><br>
+    <!--스토리 작성하고자 클릭하면 기존 글자 사라지기-->
+    <script>
+      function clearInput(el){
+        if(el.value.includes("기다리고 있어요"))
+        el.value="";
+      }
+    </script>
+    
+    <!--사진/동영상 업로드 버튼-->
+    <label>사진/동영상
+      <input type="file" accept="image/*,video/*" />  
+      </label>
+  
+    <!--my planner 와 연결-->
+    <label>My플래너
+      <input type="file" accept="image/*"/>
+    </label>
+
+    <!--링크-->
+    <label>링크
+      <input type="url" placeholder="여행플래너 URL 입력"/>
+    </label>
+   
+  </div>
+
+  <!--공개 범위 선택-->
+  <select id="visibility">
+    <option value="public">전체공개</option>
+    <option value="partial">일부공개</option>
+    <option value="private">비공개</option>
+  </select>
+ 
+  <!--댓글 기능 선택-->
+  <select id="comments">
+    <option value="allow">댓글 허용</option>
+    <option value="deny">댓글 비허용</option>
+  </select>
+ 
+  <!--다른 사용자 검색 & 태그-->
+  <button onclick="showTagSerch()">🪕</button>
+  <div id="search-box"
+       class="search-box hidden">
+       함께하는 친구 찾기<br>
+       <nav class="lets bg-body-tertiary">
+          <form class="containar-fluid">
+              <div class="input-group">
+                  <span class="input-group-text"
+                        id="basic-addon1">🪕</span>
+                  <input type="text"
+                         class="form-control"
+                         placeholder="@아이디"
+                         aria-label="Username"
+                         aria-describedby="basic-addon1">
+              </div>
+          </form>
+
+       </nav>
+  </div>
+  <script>
+      function clearInput(el){
+        if(el.value.includes("찾기🪕"))
+        el.value="";
+      }
+      function showTagSerch(){
+        document.getElementById("search-box").classList.toggle("hidden");}
+
+      function searchUser(query){
+        document.getElementById("search-results").innerHTML="검색 중"+query;}
+  </script>
+
+  <!--위치기반 서비스 팝업-->
+  <button onclick="togglePopup()">📌</button>
+      <div id="popup" class="popup hidden">
+          작성 중인 스토리가 보여지는 동안<br>
+          '스토리'에서 사용자의 위치에<br>
+          접근하도록 허용하시겠습니까?<br>
+          사용자의 데이터는 개인화된 광고 제공 목적으로 사용됩니다.<br>
+        <button onclick="setLocationPerMission(true)">허용</button>
+        <button onclick="setLocationPerMission(false)">비허용</button>
+      </div>
+      <script>
+         function togglePopup(){
+           document.getElementById("popup").classList.toggle("hidden");
+         }
+         function setLocationPerMission(allowed){
+            alert(allowed ? "위치 접근 허용됨" : "위치 접근 비허용됨");
+            document/getElementById("popup").classList.add("hidden");
+         }
+      </script>
+
+  <!--취소/올리기 버튼-->
+  <button onclick="cancelPost()">취소</button>
+    <script>
+         function cancelPost(){
+            alert("작성 내용이 임시 저장되었습니다.");
+            window.location.href="/weShow.html"; //스토리 메인 화면으로 이동
+         } 
+    </script>
+  <button onclick="submitPost()">올리기</button>
+    <script>
+         function submitPost(){
+            alert("스토리가 업로드되었습니다.");
+            window.location.href="/weShow.html"; //스토리 메인 메인화면으로 이동
+         } 
+    </script>
+
+    <footer>
+      <nav>
+        <a href="/tripPlanneer">여행플래너</a>
+        <a href="/announcement">공지사항</a>
+        <a href="/privacyPolicy">개인정보처리방침</a>
+        <a href="/customerServiceCenter">고객센터</a>
+      </nav>
+      <nav>
+        <a href="/termsOfUse">이용약관</a>
+        <a href="/termsOfUseForLocationBasedServices">위치기반서비스 이용약관</a>
+        <a href="/copyrightProtectionPolicy">저작권 보호정책</a>
+        <a href="/customerServiceSite">고객서비스현장</a>
+        <a href="/refusalOfUnauthorizedCollectionOdEmail">전자우편 무단수집거부</a>
+      </nav>
+    </footer>
+  </body>
+</html>
