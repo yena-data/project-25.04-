@@ -9,7 +9,31 @@
         padding: 0;
         margin: 0;
       }
-      .main-menu ul {
+      .image-button{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        margin: 10px;
+      }
+      .image-button div {
+        border: none;
+        background: none;
+        padding: 0;
+        cursor: pointer;
+        outline: none;
+      }
+      .image-button div img {
+        display: block;
+        width: 90px;
+        height: 60px;
+        object-fit: cover;
+        max-width: 100%;
+        height: auto;
+        outline: none;
+      }
+
+      .main-menu nav {
         display: flex;
         flex-direction: row;
         gap: 5px;
@@ -60,47 +84,60 @@
     </style>
   </head>
   <body>
-    <header></header>
-    <div>
-      <!--홈페이지 메인로고/로그인/사용자ID-->
-      <button>Let's</button>
-      <button>ID</button>
-    </div>
-
-    <!--메뉴-->
-    <div class="main-menu">
-      <ul>
-        <button>스토리</button>
-        <button>커뮤니티</button>
-        <button>여행혜택</button>
-        <button>마이페이지</button>
-      </ul>
-    </div>
+    <header>
+      <div>
+        <!--홈페이지 메인로고/로그인/사용자ID-->
+        <div class="top-left-button-container">
+          <button id="image-button">
+                <img src="/Logo.png" alt="버튼 이미지">
+          </button>
+        <button>ID</button>
+      </div>
+  
+      <!--메뉴-->
+      <div class="main-menu">
+        <nav>
+          <button type="button" onclick="location.href='/weStory'">스토리</button>
+          <button type="button" onclick="location.href='/community'">커뮤니티</button>
+          <button type="button" onclick="location.href='/benefits'">여행혜택</button>
+        </nav>
+      </div>
+    </header>
     <!--페이지 안내 이미지-->
+
+    <!--스토리 바로가기-->
     <ul>
-      Story 👉
+      <button type="button" onclick="location.href='/weMain'">Story 👉</button>  
     </ul>
+
     <div class="about-page">
       <img src="/image/travel1.jpg" width="150" height="100" />
       <img src="/image/travel2.jpg" width="150" height="100" />
       <img src="/image/travel3.jpg" width="150" height="100" />
       <img src="/image/travel4.jpg" width="150" height="100" />
       <img src="/image/travel5.jpg" width="150" height="100" />
+
       <!--화살표로 좌우 이동-->
       <p class="controller">
         <span class="prev"></span>
         <span class="next"></span>
       </p>
     </div>
+
     <!--광고 배너-->
-    <div class="ad-banner">
+    <!-- <div class="ad-banner">
       📢산불은 오직 예방만이 최선입니다!📢
       <h6>🌺봄철 산불조심기간 🐦‍🔥 2025.1.24~5.15</h6>
-    </div>
+    </div> -->
+
     <!--유튜브 광고영상-->
-    <!-- <ul>
-      한국관광공사 youtube 👉
-    </ul> -->
+    <button id="youtubeButton">한국관광공사Youtube 바로가기👉</button>
+    <script>
+        document.getElementById("youtubeButton").onclick = function(){
+          window.open("https://www.youtube.com/@imagineyourkorea","_blank");
+        }
+    </script>
+
     <div class="youtube">
       <iframe
         width="400"
@@ -125,22 +162,24 @@
       >
       </iframe>
     </div>
+
     <!--광고 이미지-->
     <div class="advertising-image"></div>
 
-    <footer>
-      <ul>
-        <button>여행 플래너</button>
-        <button>공지사항</button>
-        <button>개인정보 처리방침</button>
-        <button>고객센터</button>
-      </ul>
-      <div class="useage">
-        <h6>
-          이용약관/위치기반서비스 이용약관/저작권
-          보호정책/고객서비스현장/전자우편 무단수집거부
-        </h6>
-      </div>
+     <footer>
+      <nav>
+        <a href="/tripPlanneer">여행플래너</a>
+        <a href="/announcement">공지사항</a>
+        <a href="/privacyPolicy">개인정보처리방침</a>
+        <a href="/customerServiceCenter">고객센터</a>
+      </nav>
+      <nav>
+        <a href="/termsOfUse">이용약관</a>
+        <a href="/termsOfUseForLocationBasedServices">위치기반서비스 이용약관</a>
+        <a href="/copyrightProtectionPolicy">저작권 보호정책</a>
+        <a href="/customerServiceSite">고객서비스현장</a>
+        <a href="/refusalOfUnauthorizedCollectionOdEmail">전자우편 무단수집거부</a>
+      </nav>
     </footer>
   </body>
 </html>

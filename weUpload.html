@@ -3,12 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Write</title>
+    <title>Story Upload</title>
 
     <!--팝업 스타일-->
     <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
       body {
         font-family: Arial, sans-serif;
+      }
+
+      .main-menu nav {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+      }
+      .main-menu button {
+        width: 100px;
+        height: 50px;
+        display: flex;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .user-status {
+        display: flex;
+        align-items: center;
+      }
+      .user-status span {
+        margin-left: auto;
       }
       .hidden {
         display: none;
@@ -27,21 +58,89 @@
     </style>
   </head>
     <header>
-      <!--메인(모든 페이지 동일)메뉴-->
-      <nav>
-        <a href="/main">Let's</a>
-        <a href="/weStory">스토리</a>
-        <a href="/community">커뮤니티</a>
-        <a href="/benefits">여행혜택</a>
-        <a href="/mypage">마이페이지</a>
-        <!--로그인 시 아이디 표시, 미로그인 시 로그인 글자로 표시-->
-        <span
-          th:text="${authentication.name != 'anonymousUser'} ? '@' + #authentication.name : '로그인' "
-        ></span>
+
+      <div>
+        <!--홈페이지 메인로고-->
+        <div class="top-left-button-container">
+          <button id="image-button">
+                <img src="/Logo.png" alt="버튼 이미지">
+          </button>
+        <button>ID</button>
+      </div>
+
+      <!--메뉴-->
+      <div class="main-menu">
+        <nav>
+          <button type="button" onclick="location.href='/weStory'">스토리</button>
+          <button type="button" onclick="location.href='/community'">커뮤니티</button>
+          <button type="button" onclick="location.href='/benefits'">여행혜택</button>
+        </nav>
+      </div>
+        
+      <!--로그인-->
+      <div id="auth-container">
+        <span id="user-status">로그인</span>
+          <button id="logout-button" 
+                  style="display: none;">로그아웃
+          </button>
+
+    <!--로그인 동작-->
+    <script>
+      document.addEventListener('DOMContentLoaded',()=>{
+          const userStatusSpan = document.getElementById('user-status');
+          const logoutButton = document.getElementById('logout-button');
+
+          //로그인 상태에 따라 변경됨
+          function updateAuthDisplay(){
+              const loggedInUser = localStorage.getItem('loggedInUser');
+
+              if(loggedInUser){
+                  //로그인 상태일 경우
+                  userStatusSpan.textContent = loggedInUser;
+                  logoutButton.style.display ='inline-block';
+                  userStatusSpan.style.cursor ='pointer';
+              } else {
+                  //로그아웃 상태일 경우
+                  userStatusSpan.textContent ='로그인';
+                  logoutButton.style.display ='none';
+                  userStatusSpan.style.cursor ='pointer';
+              }
+          }
+          userStatusSpan.addEventListener('click',()=>{
+            const loggedInUser = localStorage.getItem('loggedInUser');
+
+            if(loggedInUser){
+              //로그인 상태일 경우 마이페이지로 이동
+              window.location.href = '/mypage'
+            } else {
+                //로그아웃 상태일 경우 로그인처리
+                const userId = prompt('사용자 ID를 입력하세요');
+
+                if(userId){
+                    localStorage.setItem('loggedInUser',userId);
+                    updateAuthDisplay();
+                    alert('${userId}님, 반갑습니다😃');
+                }else{
+                    //입력 취소
+                    alert('로그인이 취소되었습니다');
+                }
+            }
+          })
+          // 로그아웃
+          logoutButton.addEventListener('click',()=>{
+              localStorage.removeItem('loggedInUser');
+              updateAuthDisplay();
+              alert('로그아웃되었습니다');
+          })
+          //초기 로그인 상태로 복구
+          updateAuthDisplay();
+      })
+  </script>
+      </div>  
       </nav>
     </header>
     
-    <div>
+    <div class="writeStory">
     <!--스토리 작성 초기 화면-->
     <input
       id="text-input"

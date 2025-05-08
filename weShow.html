@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Story Main</title>
+    <title>Story Show</title>
     <style>
        .auth-container{
             display: flex;
@@ -27,6 +27,25 @@
        .logout-button:hover:hover{
             background-color: #d32f2f;
        }
+
+       .main-menu nav {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+      }
+      .main-menu button {
+        width: 100px;
+        height: 50px;
+        display: flex;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
@@ -45,7 +64,7 @@
                 <span class="lets-toggle-icon"></span>
               </button>
               <button class="lets-login">
-                 <!--로그인-->
+      <!--로그인-->
         <div id="auth-container">
           <span id="user-status">로그인</span>
           <button id="logout-button" 
@@ -105,20 +124,14 @@
         })
     </script>
               </button>
-        </div>
-        <div class="collapse lets-collapse" id="letsNav">
-            <ul class="lets-nav">
-              <li class="lets-item">
-                <a class="lets-link" href="/weShow.html">스토리</a></li>
-              <li class="lets-item">
-                <a class="lets-link" href="/community">커뮤니티</a></li>
-              <li class="lets-item">
-                <a class="lets-link" href="/benefit">여행혜택</a></li>
-              <li class="lets-item">
-                <a class="lets-link" href="/mypage">마이페이지</a></li>
-            </ul>
-        </div>
-      </nav>
+            </nav>
+            <div class="main-menu">
+              <nav>
+                <button type="button" onclick="location.href='/weStory'">스토리</button>
+                <button type="button" onclick="location.href='/community'">커뮤니티</button>
+                <button type="button" onclick="location.href='/benefits'">여행혜택</button>
+              </nav>
+            </div>
 
     </header>
 
