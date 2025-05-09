@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Story Show</title>
     <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        font-family: Arial, cal sans-serif;
+      }
        .auth-container{
             display: flex;
             align-items: center;
@@ -16,18 +23,7 @@
             font-weight: bold;
             color: #333;
        }
-       .logout-button{
-            padding: 5px 10px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-       }
-       .logout-button:hover:hover{
-            background-color: #d32f2f;
-       }
-
+       /*메인메뉴*/
        .main-menu nav {
         display: flex;
         flex-direction: row;
@@ -54,19 +50,17 @@
       <nav class="Let's lets-expand-lg bg-body-teriary">
         <div class="container-fluid">
             <a class="lets-brand" href="main.html">Let's</a>
-            <button class="lets-toggle" 
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#letsNav"
-                    aria-controls="letsNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="lets-toggle-icon"></span>
-              </button>
-              <button class="lets-login">
+                <div class="main-menu">
+                  <nav>
+                    <button type="button" onclick="location.href='/weStory'">스토리</button>
+                    <button type="button" onclick="location.href='/community'">커뮤니티</button>
+                    <button type="button" onclick="location.href='/benefits'">여행혜택</button>
+                  </nav>
+                </div>
+
       <!--로그인-->
         <div id="auth-container">
-          <span id="user-status">로그인</span>
+          <button id="user-status">로그인</button>
           <button id="logout-button" 
                   style="display: none;">로그아웃
           </button>
@@ -123,16 +117,6 @@
             updateAuthDisplay();
         })
     </script>
-              </button>
-            </nav>
-            <div class="main-menu">
-              <nav>
-                <button type="button" onclick="location.href='/weStory'">스토리</button>
-                <button type="button" onclick="location.href='/community'">커뮤니티</button>
-                <button type="button" onclick="location.href='/benefits'">여행혜택</button>
-              </nav>
-            </div>
-
     </header>
 
     <body>

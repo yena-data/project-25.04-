@@ -5,16 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Story Upload</title>
 
-    <!--팝업 스타일-->
     <style>
       *{
-        padding: 0;
+        padding: 0; margin: 0;
+      }
+      .container-fluid{
+        font-family: 'Cal Sans', sans-serif;
+        font-size: bold;
+        font-size: 24px;
+        text-decoration: none;
         margin: 0;
       }
-      body {
-        font-family: Arial, sans-serif;
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
       }
 
+      /*로그인 버튼*/
+      .auth-container{
+        font-size: 14px; padding: 6px 12px;}
+      
+      /*메인메뉴*/
       .main-menu nav {
         display: flex;
         flex-direction: row;
@@ -41,9 +54,51 @@
       .user-status span {
         margin-left: auto;
       }
+
+      /*스토리박스 전체*/
+      .story-write div{
+        width: 999px;
+        height: 100px;
+        border: 1px solid #ccc;
+        padding: 16px;
+        margin: 20px 0;
+        border-radius: 10px;
+        align-items: center;
+      }
+      
+      /*사진,플래너,링크 버튼*/
       .hidden {
         display: none;
       }
+      .hidden-input{
+        opacity: 0;
+        position: absolute;
+        left: -9999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+      }
+      .hidden-input-container{
+        display: none;
+        margin-top: 5px;
+      }
+      .button-label{
+        display: inline-block;
+        padding: 8px 15px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+      .button-label:hover{
+        background-color: #e0e0e0;
+      }
+      .button-label:active{
+        background-color: #d0d0d0;
+      }
+
       .popup,
       .search-box {
         border: 1px solid #ccc;
@@ -55,17 +110,29 @@
       #text-input:focus {
         color: black;
       }
+
+      .footer-link{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        font-size: 13px;
+        color: #ccc;
+        padding: 20px;
+        border-top: 1px solid #ddd;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+      }
     </style>
   </head>
     <header>
 
       <div>
         <!--홈페이지 메인로고-->
-        <div class="top-left-button-container">
-          <button id="image-button">
-                <img src="/Logo.png" alt="버튼 이미지">
-          </button>
-        <button>ID</button>
+        <nav class="Let's lets-expand-lg bg-body-teriary">
+          <div class="container-fluid">
+              <a class="lets-brand" href="main.html">Let's</a>
       </div>
 
       <!--메뉴-->
@@ -79,7 +146,7 @@
         
       <!--로그인-->
       <div id="auth-container">
-        <span id="user-status">로그인</span>
+        <button id="user-status">로그인</button>
           <button id="logout-button" 
                   style="display: none;">로그아웃
           </button>
@@ -138,40 +205,56 @@
   </script>
       </div>  
       </nav>
+
     </header>
-    
-    <div class="writeStory">
+
+    <div class="write-story">
     <!--스토리 작성 초기 화면-->
-    <input
-      id="text-input"
-      type="text"
-      value="당신의 이야기를 기다리고 있어요."
-      onclick="clearInput(this)"/><br>
+      <textarea
+          id="text-input"
+          placeholder="당신의 이야기를 기다리고 있어요."
+          autocomplete="off"
+          style="width: 66.66vw; height: 200px; font-size: 1rem; padding: 0.5em;">
+        </textarea><br>
+
     <!--스토리 작성하고자 클릭하면 기존 글자 사라지기-->
     <script>
-      function clearInput(el){
-        if(el.value.includes("기다리고 있어요"))
-        el.value="";
-      }
+      const input=document.getElementById('text-input');
+      input.addEventListener('focus',function clearTextarea(el){
+        if(this.value.trim()==="당신의 이야기를 기다리고 있어요."){
+          this.value="";
+        }})
     </script>
     
     <!--사진/동영상 업로드 버튼-->
-    <label>사진/동영상
-      <input type="file" accept="image/*,video/*" />  
+    <label for="file-upload-photo" class="button-label">사진/동영상
+      <input type="file" id="file-upload-photo" accept="image/*,video/*" 
+             class="hidden-input"/>  
       </label>
   
-    <!--my planner 와 연결-->
-    <label>My플래너
-      <input type="file" accept="image/*"/>
+    <!--my planner 와 연결--> 
+    <label for="file-upload-planner" class="button-label">My플래너
+      <input type="file" id="file-upload-planner" accept="image/*"/
+             class="hidden-input">
     </label>
 
     <!--링크-->
-    <label>링크
-      <input type="url" placeholder="여행플래너 URL 입력"/>
-    </label>
+    <label for="link-toggle" class="button-label" id="link-button">링크</label>
+      <div id="link-input-container" class="hidden-input-container">
+        <input type="url" id="link-input" placeholder="여행플래너 URL 입력"/>
+      </div>
+    <script>
+      document.getElementById('link-button').addEventListener('click',function(){
+          const linkInputContainer = document.getElementById('link-input-container');
+          if(linkInputContainer.style.display === 'none' || 
+              linkInputContainer.style.display === ''){
+                linkInputContainer.style.display = 'block';
+              } else {
+                linkInputContainer.style.display = 'none';
+              }
+      })
+    </script>
    
-  </div>
-
   <!--공개 범위 선택-->
   <select id="visibility">
     <option value="public">전체공개</option>
@@ -187,7 +270,7 @@
  
   <!--다른 사용자 검색 & 태그-->
   <button onclick="showTagSerch()">🪕</button>
-  <div id="search-box"
+  <id="search-box"
        class="search-box hidden">
        함께하는 친구 찾기<br>
        <nav class="lets bg-body-tertiary">
@@ -204,7 +287,7 @@
           </form>
 
        </nav>
-  </div>
+  
   <script>
       function clearInput(el){
         if(el.value.includes("찾기🪕"))
@@ -252,8 +335,11 @@
             window.location.href="/weShow.html"; //스토리 메인 메인화면으로 이동
          } 
     </script>
+  </div>
 
-    <footer>
+  
+
+    <footer id="footer-link">
       <nav>
         <a href="/tripPlanneer">여행플래너</a>
         <a href="/announcement">공지사항</a>
