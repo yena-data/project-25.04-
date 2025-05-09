@@ -5,5 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Story Main</title>
   </head>
-  <body></body>
+  <header>
+        <!--메인(모든 페이지 동일)메뉴-->
+      <nav class="Let's lets-expand-lg bg-body-teriary">
+        <div class="container-fluid">
+            <a class="lets-brand" href="main.html">Let's</a>
+                <div class="main-menu">
+                  <nav>
+                    <button type="button" onclick="location.href='/weStory'">스토리</button>
+                    <button type="button" onclick="location.href='/community'">커뮤니티</button>
+                    <button type="button" onclick="location.href='/benefits'">여행혜택</button>
+                  </nav>
+                </div>
+
+      <!--로그인-->
+        <div id="auth-container">
+          <button id="user-status">로그인</button>
+          <button id="logout-button" 
+                  style="display: none;">로그아웃
+          </button>
+    </div>
+    <!--로그인 동작-->
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const userStatusSpan = document.getElementById('user-status');
+            const logoutButton = document.getElementById('logout-button');
+
+            //로그인 상태에 따라 변경됨
+            function updateAuthDisplay(){
+                const loggedInUser = localStorage.getItem('loggedInUser');
+
+                if(loggedInUser){
+                    //로그인 상태일 경우
+                    userStatusSpan.textContent = loggedInUser;
+                    logoutButton.style.display ='inline-block';
+                    userStatusSpan.style.cursor ='pointer';
+                } else {
+                    //로그아웃 상태일 경우
+                    userStatusSpan.textContent ='로그인';
+                    logoutButton.style.display ='none';
+                    userStatusSpan.style.cursor ='pointer';
+                }
+            }
+            userStatusSpan.addEventListener('click',()=>{
+              const loggedInUser = localStorage.getItem('loggedInUser');
+
+              if(loggedInUser){
+                //로그인 상태일 경우 마이페이지로 이동
+                window.location.href = '/mypage'
+              } else {
+                  //로그아웃 상태일 경우 로그인처리
+                  const userId = prompt('사용자 ID를 입력하세요');
+
+                  if(userId){
+                      localStorage.setItem('loggedInUser',userId);
+                      updateAuthDisplay();
+                      alert('${userId}님, 반갑습니다😃');
+                  }else{
+                      //입력 취소
+                      alert('로그인이 취소되었습니다');
+                  }
+              }
+            })
+            // 로그아웃
+            logoutButton.addEventListener('click',()=>{
+                localStorage.removeItem('loggedInUser');
+                updateAuthDisplay();
+                alert('로그아웃되었습니다');
+            })
+            //초기 로그인 상태로 복구
+            updateAuthDisplay();
+        })
+    </script>
+  </header>
+  <body>
+        <!--스토리 작성 초기 화면-->
+      <input
+          id="text-input"
+          type="text"
+          placeholder="당신의 이야기를 기다리고 있어요."
+          onclick="clearInPut(this)"/>
+        </input><br>
+      <script>
+          function clearInPut(el){
+              if(el.value === "당신의 이야기를 기다리고 있어요.")
+              el.value="";
+          }
+      </script>
+      <button type="button" onclick="location.href='/weUpload.html'">이동</button>
+    
+      <!--다른 사용자들의 스토리 이미지-->
+      <div class="others-img">
+            <img src="/image/travel1.jpg" width="150" height="100" />
+            <img src="/image/travel2.jpg" width="150" height="100" />
+            <img src="/image/travel3.jpg" width="150" height="100" />
+            <img src="/image/travel4.jpg" width="150" height="100" />
+            <img src="/image/travel5.jpg" width="150" height="100" />
+
+        <!--화살표로 좌우 이동-->
+        <p class="controller">
+            <span class="prev">⬅️</span>
+            <span class="next">➡️</span>
+        </p>
+      </div>
+      
+      <!--금주 인기 스토리-->
+        <div class="popular-story">
+
+        </div>
+
+      </div>
+
+      <footer>
+      <nav>
+        <a href="/tripPlanneer">여행플래너</a>
+        <a href="/announcement">공지사항</a>
+        <a href="/privacyPolicy">개인정보처리방침</a>
+        <a href="/customerServiceCenter">고객센터</a>
+      </nav>
+      <nav>
+        <a href="/termsOfUse">이용약관</a>
+        <a href="/termsOfUseForLocationBasedServices">위치기반서비스 이용약관</a>
+        <a href="/copyrightProtectionPolicy">저작권 보호정책</a>
+        <a href="/customerServiceSite">고객서비스현장</a>
+        <a href="/refusalOfUnauthorizedCollectionOdEmail">전자우편 무단수집거부</a>
+      </nav>
+    </footer>
+  </body>
 </html>
