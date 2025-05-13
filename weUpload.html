@@ -138,7 +138,7 @@
       <!--메뉴-->
       <div class="main-menu">
         <nav>
-          <button type="button" onclick="location.href='/weStory'">스토리</button>
+          <button type="button" onclick="location.href='/weStory.html'">스토리</button>
           <button type="button" onclick="location.href='/community'">커뮤니티</button>
           <button type="button" onclick="location.href='/benefits'">여행혜택</button>
         </nav>
@@ -178,7 +178,7 @@
 
             if(loggedInUser){
               //로그인 상태일 경우 마이페이지로 이동
-              window.location.href = '/mypage'
+              window.location.href ='/myStory.html'
             } else {
                 //로그아웃 상태일 경우 로그인처리
                 const userId = prompt('사용자 ID를 입력하세요');
@@ -214,13 +214,12 @@
           id="text-input"
           placeholder="당신의 이야기를 기다리고 있어요."
           autocomplete="off"
-          style="width: 66.66vw; height: 200px; font-size: 1rem; padding: 0.5em;">
-        </textarea><br>
+          style="width: 66.66vw; height: 200px; font-size: 1rem; padding: 0.5em;"></textarea>
 
     <!--스토리 작성하고자 클릭하면 기존 글자 사라지기-->
     <script>
       const input=document.getElementById('text-input');
-      input.addEventListener('focus',function clearTextarea(el){
+      input.addEventListener('focus',function clearTextarea(){
         if(this.value.trim()==="당신의 이야기를 기다리고 있어요."){
           this.value="";
         }})
@@ -270,7 +269,7 @@
  
   <!--다른 사용자 검색 & 태그-->
   <button onclick="showTagSerch()">🪕</button>
-  <id="search-box"
+  <div id="search-box"
        class="search-box hidden">
        함께하는 친구 찾기<br>
        <nav class="lets bg-body-tertiary">
@@ -287,7 +286,7 @@
           </form>
 
        </nav>
-  
+  </div>
   <script>
       function clearInput(el){
         if(el.value.includes("찾기🪕"))

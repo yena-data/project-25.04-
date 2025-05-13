@@ -4,6 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Story Main</title>
+
+    <style>
+           /*메인메뉴*/
+       .main-menu nav {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+      }
+      .main-menu button {
+        width: 100px;
+        height: 50px;
+        display: flex;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
   </head>
   <header>
         <!--메인(모든 페이지 동일)메뉴-->
@@ -12,7 +34,7 @@
             <a class="lets-brand" href="main.html">Let's</a>
                 <div class="main-menu">
                   <nav>
-                    <button type="button" onclick="location.href='/weStory'">스토리</button>
+                    <button type="button" onclick="location.href='/weStory.html'">스토리</button>
                     <button type="button" onclick="location.href='/community'">커뮤니티</button>
                     <button type="button" onclick="location.href='/benefits'">여행혜택</button>
                   </nav>
@@ -52,10 +74,11 @@
 
               if(loggedInUser){
                 //로그인 상태일 경우 마이페이지로 이동
-                window.location.href = '/mypage'
+                window.location.href ='/myStory.html'
               } else {
                   //로그아웃 상태일 경우 로그인처리
                   const userId = prompt('사용자 ID를 입력하세요');
+                  const userPw = prompt('사용자 PW를 입력하세요.');
 
                   if(userId){
                       localStorage.setItem('loggedInUser',userId);
@@ -80,19 +103,24 @@
   </header>
   <body>
         <!--스토리 작성 초기 화면-->
-      <input
-          id="text-input"
+      <a href="/weUpload.html" style="text-decoration: none;">
+        <input
+        id="text-input"
           type="text"
           placeholder="당신의 이야기를 기다리고 있어요."
-          onclick="clearInPut(this)"/>
+          onclick="clearInPut(this)"
+          readonly 
+          style="cursor: pointer;"
+          />
         </input><br>
+      </a>
+          
       <script>
           function clearInPut(el){
               if(el.value === "당신의 이야기를 기다리고 있어요.")
               el.value="";
           }
       </script>
-      <button type="button" onclick="location.href='/weUpload.html'">이동</button>
     
       <!--다른 사용자들의 스토리 이미지-->
       <div class="others-img">
