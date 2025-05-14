@@ -6,40 +6,70 @@
     <title>Story Main</title>
 
     <style>
-           /*메인메뉴*/
-       .main-menu nav {
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-        align-items: center;
-        justify-content: center;
-      }
-      .main-menu button {
-        width: 100px;
-        height: 50px;
-        display: flex;
-        border: none;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        justify-content: center;
-        align-items: center;
-      }
-      /*로그인 버튼*/
-    .lets-expand-lg {
-        position: relative;
-        align-items: center;
-        padding: 10px 20px;
+       /* 상단 고정 바 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(to bottom, #222, #333);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-     .user-status div{
-        position: fixed;
-        top: 10px;
-        right: 20px;
-        z-index: 1000;
-     }
-     #user-status div button {
-        margin-left: 5px;
-     }
+
+    /* 로고 */
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    /* 메뉴 항목 */
+    .menu {
+      display: flex;
+      gap: 30px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+    }
+
+    .menu a:hover {
+      color: #00bfff;
+    }
+
+    /* 로그인 영역 */
+    .auth {
+      display: flex;
+      gap: 15px;
+    }
+
+    .auth button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .auth button:hover {
+      color: #00bfff;
+    }
+
+    /* 본문 내용(스크롤 테스트용) */
+    .content {
+      margin-top: 80px;
+      padding: 20px;
+      height: 2000px;
+      background: #f5f5f5;
+    }
+
       /*스토리로 이동*/
       .a{
         display: block;
