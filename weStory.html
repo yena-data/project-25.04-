@@ -25,6 +25,39 @@
         justify-content: center;
         align-items: center;
       }
+      /*로그인 버튼*/
+    .lets-expand-lg {
+        position: relative;
+        align-items: center;
+        padding: 10px 20px;
+    }
+     .user-status div{
+        position: fixed;
+        top: 10px;
+        right: 20px;
+        z-index: 1000;
+     }
+     #user-status div button {
+        margin-left: 5px;
+     }
+      /*스토리로 이동*/
+      .a{
+        display: block;
+        width: calc(100% / 3*2);
+        margin: 60px auto;
+        text-decoration: none;
+      }
+      #text-input{
+          width: 100%;
+          box-sizing: border-box;
+          text-align: center;
+          font-size: 1.3em;
+          padding: 20px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          cursor: pointer;
+      }
+
     </style>
   </head>
   <header>
@@ -32,16 +65,11 @@
       <nav class="Let's lets-expand-lg bg-body-teriary">
         <div class="container-fluid">
             <a class="lets-brand" href="main.html">Let's</a>
-                <div class="main-menu">
-                  <nav>
-                    <button type="button" onclick="location.href='/weStory.html'">스토리</button>
-                    <button type="button" onclick="location.href='/community'">커뮤니티</button>
-                    <button type="button" onclick="location.href='/benefits'">여행혜택</button>
-                  </nav>
-                </div>
+        </div></nav>
+               
 
       <!--로그인-->
-        <div id="auth-container">
+    <div id="auth-container">
           <button id="user-status">로그인</button>
           <button id="logout-button" 
                   style="display: none;">로그아웃
@@ -100,14 +128,21 @@
             updateAuthDisplay();
         })
     </script>
+     <div class="main-menu">
+                  <nav>
+                    <button type="button" onclick="location.href='/weStory.html'">스토리</button>
+                    <button type="button" onclick="location.href='/community'">커뮤니티</button>
+                    <button type="button" onclick="location.href='/benefits'">여행혜택</button>
+                  </nav>
+      </div>
   </header>
   <body>
         <!--스토리 작성 초기 화면-->
       <a href="/weUpload.html" style="text-decoration: none;">
         <input
-        id="text-input"
+          id="text-input"
           type="text"
-          placeholder="당신의 이야기를 기다리고 있어요."
+          placeholder="당신의 이야기를 기다리고 있어요.▶️"
           onclick="clearInPut(this)"
           readonly 
           style="cursor: pointer;"
@@ -129,19 +164,12 @@
             <img src="/image/travel3.jpg" width="150" height="100" />
             <img src="/image/travel4.jpg" width="150" height="100" />
             <img src="/image/travel5.jpg" width="150" height="100" />
-
-        <!--화살표로 좌우 이동-->
-        <p class="controller">
-            <span class="prev">⬅️</span>
-            <span class="next">➡️</span>
-        </p>
       </div>
       
       <!--금주 인기 스토리-->
         <div class="popular-story">
 
         </div>
-
       </div>
 
       <footer>
