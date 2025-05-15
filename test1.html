@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /*메인메뉴*/
+      * {
+        font-family: "Arial", sans-serif;
+        padding: 0;
+        margin: 0;
+        /* background-color: #f5f5f5; */
+      }
+      #header {
+        margin-bottom: 80px;
+      }
+      .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #006cfa;
+        color: rgb(0, 0, 0);
+        z-index: 999;
+        box-shadow: 0 2px 5px rgba(250, 250, 250, 0.2);
+      }
+      .navbar-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 32px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .menu {
+        display: flex;
+        gap: 30px;
+      }
+
+      .menu a {
+        text-decoration: none;
+        font-weight: bold;
+        color: white;
+        font-size: 16px;
+      }
+
+      .menu a:hover {
+        color: #000000;
+      }
+
+      .auth {
+        /* 요소들을 가로로 나란히 정렬해줘 */
+        display: flex;
+        /* 요소들 세로 방향 가운데 맞춰줘 */
+        align-items: center;
+        /* 요소들 사이에 적당히 간격 띄워줘 */
+        gap: 15px; /* 간격은 조절해도 괜찮아! */
+      }
+
+      .auth a,
+      .auth span {
+        /* 링크랑 이름 표시되는 글자 색깔을 흰색으로! */
+        color: white;
+        /* (선택 사항) 링크 밑줄 없애는 건데, 필요 없으면 빼도 돼 */
+        text-decoration: none;
+        /* (선택 사항) 글자 누르면 커서 모양 바뀌게 하고 싶으면 추가해봐! */
+        cursor: pointer;
+      }
+
+      /*스토리 이동*/
+      /*스토리로 이동*/
+				      .a{
+				        display: block;
+				        width: calc(100% / 3*2);
+				        margin: 60px auto;
+				        text-decoration: none;
+				      }
+				      #text-input{
+				          width: 100%;
+				          box-sizing: border-box;
+				          text-align: center;
+				          font-size: 1.3em;
+				          padding: 20px;
+				          border: 1px solid #ddd;
+				          border-radius: 8px;
+				          cursor: pointer;
+				      }
+    /*스토리 카드*/
+
+
+
+
+
+      /*footer*/
+      /* div 클래스 1: noticeBox 스타일 */
+      .noticeBox {
+        /* 필요에 따라 정렬 등 추가 */
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px; /* 다음 섹션과의 간격 */
+        font-size: 14px; /* 공지 내용의 기준 폰트 크기 설정 (예시) */
+        background-color: #ffffff;
+        border-top: 1px solid #a8a8a8;
+      }
+
+      /* noticeBox 안의 '공지사항' 부분 (span 등으로 감쌌다고 가정) */
+      .noticeBox .notice-title {
+        font-weight: bold; /* 공지사항 글자 굵게 */
+        margin-right: 40px; /* '공지사항'과 '공지내용' 사이 간격 */
+        flex-shrink: 0;
+      }
+
+      /* noticeBox 안의 '공지내용' 부분 (span 등으로 감쌌다고 가정) */
+      .noticeBox .notice-content {
+        font-weight: normal; /* 공지내용 일반 글자체 */
+        /* 폰트 크기는 부모인 noticeBox의 font-size를 따라감 */
+        flex-grow: 1;
+      }
+
+      /* div 클래스 2: guidMenu 스타일 */
+      .guidMenu {
+        border-top: 1px solid #a8a8a8;
+        padding-top: 5px;
+        margin-bottom: 5px; /* 다음 섹션과의 간격 */
+      }
+
+      /* guidMenu 안의 모든 a 태그 스타일 */
+      .guidMenu a {
+        font-size: 12px; /* noticeBox 내용(14px)보다 2px 작게 */
+        text-decoration: none; /* 밑줄 제거 */
+        color: #333; /* 링크 색상 (예시) */
+        margin-right: 15px; /* 링크들 사이 간격 */
+      }
+
+      /* guidMenu 마지막 링크에는 간격 제거 (선택 사항) */
+      .guidMenu a:last-child {
+        margin-right: 0;
+      }
+
+      /* div 클래스 3: cs 스타일 */
+      .cs {
+        margin-bottom: 15px;
+        /* 필요에 따라 푸터 맨 아래 div는 간격 조정 */
+        border-bottom: 1px solid #a8a8a8;
+      }
+
+      /* cs 안의 모든 a 태그 스타일 */
+      .cs a {
+        font-size: 10px; /* guidMenu(12px)보다 2px 작게 */
+        text-decoration: none; /* 밑줄 제거 */
+        color: #666; /* 링크 색상 (예시, guidMenu보다 연하게) */
+        margin-right: 15px; /* 링크들 사이 간격 */
+      }
+
+      /* cs 마지막 링크에는 간격 제거 (선택 사항) */
+      .cs a:last-child {
+        margin-right: 0;
+      }
+    </style>
+  </head>
+  <header>
+    <!--메인(모든 페이지 동일)메뉴-->
+    <!-- 상단 고정 네비게이션 바 -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div
+          class="logo"
+          id="logo"
+          type="button"
+          onclick="location.href='/letsmain'"
+        >
+          Let's
+        </div>
+        <div class="menu">
+          <a href="/weStory">스토리</a>
+          <a href="/community">커뮤니티</a>
+          <a href="/benefit">여행혜택</a>
+        </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.querySelector(".navbar");
+            const content = document.querySelector(".content");
+
+            const navbarHeight = navbar.offsetHeight;
+            content.style.marginTop = `${navbarHeight + 20}px`;
+          });
+        </script>
+
+        <div class="auth">
+          <a sec:authorize="isAnonymous()" href="javascript:login();">로그인</a>
+          <span
+            id="userNameDisplay"
+            sec:authorize="isAuthenticated()"
+            class="px-3"
+            sec:authentication="name"
+          ></span>
+          <a sec:authorize="isAuthenticated()" href="/logout">로그아웃</a>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              console.log("DOMContentLoaded 이벤트 발생!"); // <-- 이거 추가
+              const userNameElement =
+                document.getElementById("userNameDisplay");
+              console.log("userNameElement 찾음:", userNameElement); // <-- 이거 추가
+
+              if (userNameElement) {
+                console.log(
+                  "userNameElement가 존재함. 클릭 이벤트 리스너 추가 시작"
+                ); // <-- 이거 추가
+                userNameElement.addEventListener("click", function () {
+                  console.log("이름 클릭됨!"); // <-- 이거 추가
+                  window.location.href = "/myStory";
+                });
+                userNameElement.style.cursor = "pointer";
+              } else {
+                console.log("userNameDisplay 요소를 찾지 못했습니다."); // <-- 이거 추가
+              }
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+    <!--로그인 동작-->
+    <script>
+      function login() {
+        let nowUrl = location.href.split("/");
+        console.log(nowUrl);
+        nowUrl = nowUrl[nowUrl.length - 1];
+        location.href = "/login?redirect=" + nowUrl;
+      }
+    </script>
+  </header>
+  <body>
+        	 <!--스토리 작성 초기 화면-->
+      <a href="/weUpload" style="text-decoration: none;">
+        <input
+          id="text-input"
+          type="text"
+          placeholder="당신의 이야기를 기다리고 있어요.👉"
+          onclick="clearInPut(this)"
+          readonly 
+          style="cursor: pointer;"
+          />
+        </input><br>
+      </a>
+      <script>
+          function clearInPut(el){
+              if(el.value === "당신의 이야기를 기다리고 있어요.")
+              el.value="";
+          }
+      </script>
+    
+    <div class="categories">
+        <!--최신순-->
+        <div class="category">
+        <h3>최신순</h3>
+        <div class="story-container">
+          <div class="story-card">
+              <!--작성자 아이디-->
+              <div id="loginId">
+                  <strong th:text="${story.loginId}"></strong>
+              </div>
+              <!--작성 제목-->
+              <div id="storyTitle">
+                  <strong th:text="${story.storyTitle}"></strong>
+              </div>
+               <!--이미지-->
+              <div id="storyImgUrl">
+                  <img th:src="${story.storyImgUrl}" alt="story image"/>
+              </div>
+               <!--내용-->
+              <div id="storyContent">
+                  <p th:text="${story.storyContent}"></p>
+              </div>
+              <!--해시태그-->
+              <div id="hashTags">
+                  <span th:text="${story.hashTags}"></span>
+              </div>
+              <!--공감-->
+              <div id="likes">
+                  <button class="like-button" >
+                    <span th:text="${story.isLike ? '공감취소' : '공감' }">💗 공감</span>
+                  </button>
+          
+                    <span class="like-count" 
+                      th:text="${story.likes}">00</span>
+              </div>
+              <!--댓글-->
+              <div id="comments">
+                    <button onclick="toggleComment(this)">💬 댓글쓰기</button>
+              <!--활성화된 댓글 입력창-->
+              <div class="comment-section" style="display: none;">
+              <form method="post" action="" th:object="${storyCommentDto}">
+                    <input type="text"  th:field="*{commentContent}" placeholder="댓글을 입력하세요"/>
+                    <button type="submit">등록</button>
+              </form>
+              <!--작성된 댓글 리스트-->
+              <div class="comment-list">
+                    <a href="/story/detail" class="detail-link">댓글 더보기</a>
+              </div>
+              </div>
+         </div>
+
+          <script>
+      function goToMyStory() {
+        window.location.href = "/myStory";
+      }
+
+      // 이미지가 없으면 숨기기
+      window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".story-image").forEach((img) => {
+          if (
+            !img.getAttribute("src") ||
+            img.getAttribute("src").trim() === ""
+          ) {
+            img.style.display = "none";
+          }
+        });
+      });
+    </script>
+
+    </div>
+
+  </body>
+  <footer>
+    <div class="noticeBox">
+      <span class="notice-title">공지사항</span>
+      <span class="notice-content">여행일정 사이트 업데이트 진행(~5.15)</span>
+    </div>
+
+    <div class="guidMenu">
+      <nav>
+        <a href="/">HOME</a>
+        <a href="/tripMain">여행플래너</a>
+        <a href="/announcement">공지사항</a>
+        <a href="/privacyPolicy">개인정보처리방침</a>
+        <a href="/customerServiceCenter">고객센터</a>
+      </nav>
+    </div>
+
+    <div class="cs">
+      <nav>
+        <a href="/termsOfUse">이용약관</a>
+        <a href="/termsOfUseForLocationBasedServices"
+          >위치기반서비스 이용약관</a
+        >
+        <a href="/copyrightProtectionPolicy">저작권 보호정책</a>
+        <a href="/customerServiceSite">고객서비스현장</a>
+        <a href="/RefusalOfUnauthorizedCollectionOdEmail"
+          >전자우편 무단수집거부</a
+        >
+      </nav>
+    </div>
+  </footer>
+</html>

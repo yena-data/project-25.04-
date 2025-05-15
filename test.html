@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스토리 카드</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+
+      .categories {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .category {
+        width: 100%;
+      }
+
+      h3 {
+        color: #222;
+        margin-bottom: 20px;
+      }
+
+      .story-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        flex-wrap: nowrap; /* 가로로 2개 고정 */
+      }
+
+      .story-card {
+        background-color: white;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        width: calc(50% - 10px);
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .login-id {
+        font-weight: bold;
+        font-size: 14px;
+        color: #444;
+      }
+
+      .story-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 8px 0;
+      }
+
+      .story-image {
+        width: 100%;
+        height: 166px; /* 카드 높이의 1/3 */
+        object-fit: cover;
+        border-radius: 12px;
+        margin: 12px 0;
+      }
+
+      .story-content {
+        font-size: 14px;
+        color: #333;
+        white-space: pre-line;
+        flex-grow: 1;
+        margin-bottom: 10px;
+      }
+
+      .hashtags {
+        color: #007acc;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .actions span {
+        cursor: pointer;
+        color: #666;
+      }
+
+      .comments {
+        margin-top: 10px;
+      }
+
+      .comment {
+        font-size: 13px;
+        color: #444;
+        margin-bottom: 4px;
+      }
+
+      .more-comments {
+        font-size: 13px;
+        color: #007acc;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="categories">
+      <!-- 최신순 -->
+      <div class="category">
+        <h3>최신순</h3>
+        <div class="story-container">
+          <div class="story-card">
+            <div class="login-id">@연기묘소리트레이닝</div>
+            <div class="story-title">소슴위날이에요!</div>
+            <img
+              src="https://your-image-url.com/sample1.png"
+              alt="story image"
+              class="story-image"
+            />
+            <div class="story-content">
+              학생이 선물을 줬어요! 아침부터 기분 좋은 하루의 시작입니다 😊
+            </div>
+            <div class="hashtags">#소슴위날 #선물</div>
+            <div class="actions">
+              <span>💗 공감</span><span>2</span><span>💬 댓글쓰기</span>
+            </div>
+            <div class="comments">
+              <div class="comment">이웃분이 공감했어요</div>
+              <div class="comment">정말 따뜻한 하루네요 😊</div>
+            </div>
+            <div class="more-comments" onclick="goToMyStory()">댓글 더보기</div>
+          </div>
+
+          <div class="story-card">
+            <div class="login-id">@user456</div>
+            <div class="story-title">이미지 없이 텍스트만</div>
+            <img src="" alt="story image" class="story-image" />
+            <div class="story-content">
+              오늘은 조용히 커피 한 잔 마시며 생각 정리 중입니다.
+            </div>
+            <div class="hashtags">#글쓰기 #고요한하루</div>
+            <div class="actions">
+              <span>💗 공감</span><span>3</span><span>💬 댓글쓰기</span>
+            </div>
+            <div class="comments">
+              <div class="comment">글 너무 좋네요</div>
+              <div class="comment">공감합니다</div>
+            </div>
+            <div class="more-comments" onclick="goToMyStory()">댓글 더보기</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 인기순 -->
+      <div class="category">
+        <h3>인기순</h3>
+        <div class="story-container">
+          <div class="story-card">
+            <div class="login-id">@brightstar</div>
+            <div class="story-title">오늘의 수업 후기!</div>
+            <img
+              src="https://your-image-url.com/sample3.png"
+              alt="story image"
+              class="story-image"
+            />
+            <div class="story-content">
+              학생들이 너무 잘 따라줘서 뿌듯한 하루였어요 💛
+            </div>
+            <div class="hashtags">#수업일기 #보람차다</div>
+            <div class="actions">
+              <span>💗 공감</span><span>9</span><span>💬 댓글쓰기</span>
+            </div>
+            <div class="comments">
+              <div class="comment">항상 응원해요!</div>
+              <div class="comment">정말 멋져요 선생님!</div>
+            </div>
+            <div class="more-comments" onclick="goToMyStory()">댓글 더보기</div>
+          </div>
+
+          <div class="story-card">
+            <div class="login-id">@nofruit</div>
+            <div class="story-title">과일 없어요😅</div>
+            <img src="" alt="story image" class="story-image" />
+            <div class="story-content">
+              오늘은 선물 받은 게 없네요. 그냥 조용한 하루입니다.
+            </div>
+            <div class="hashtags">#일상 #소소한행복</div>
+            <div class="actions">
+              <span>💗 공감</span><span>1</span><span>💬 댓글쓰기</span>
+            </div>
+            <div class="comments">
+              <div class="comment">그런 날도 있어요 😊</div>
+              <div class="comment">소소한 일상이 좋아요</div>
+            </div>
+            <div class="more-comments" onclick="goToMyStory()">댓글 더보기</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function goToMyStory() {
+        window.location.href = "/myStory";
+      }
+
+      // 이미지가 없으면 숨기기
+      window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".story-image").forEach((img) => {
+          if (
+            !img.getAttribute("src") ||
+            img.getAttribute("src").trim() === ""
+          ) {
+            img.style.display = "none";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
