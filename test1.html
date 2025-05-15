@@ -255,7 +255,7 @@
               el.value="";
           }
       </script>
-    
+    <div id="스토리 정렬">
     <div class="categories">
         <!--최신순-->
         <div class="category">
@@ -327,6 +327,145 @@
 
     </div>
 
+    <div class="categories">
+        <!--인기순-->
+        <div class="category">
+        <h3>인기순</h3>
+        <div class="story-container">
+          <div class="story-card">
+              <!--작성자 아이디-->
+              <div id="loginId">
+                  <strong th:text="${story.loginId}"></strong>
+              </div>
+              <!--작성 제목-->
+              <div id="storyTitle">
+                  <strong th:text="${story.storyTitle}"></strong>
+              </div>
+               <!--이미지-->
+              <div id="storyImgUrl">
+                  <img th:src="${story.storyImgUrl}" alt="story image"/>
+              </div>
+               <!--내용-->
+              <div id="storyContent">
+                  <p th:text="${story.storyContent}"></p>
+              </div>
+              <!--해시태그-->
+              <div id="hashTags">
+                  <span th:text="${story.hashTags}"></span>
+              </div>
+              <!--공감-->
+              <div id="likes">
+                  <button class="like-button" >
+                    <span th:text="${story.isLike ? '공감취소' : '공감' }">💗 공감</span>
+                  </button>
+          
+                    <span class="like-count" 
+                      th:text="${story.likes}">00</span>
+              </div>
+              <!--댓글-->
+              <div id="comments">
+                    <button onclick="toggleComment(this)">💬 댓글쓰기</button>
+              <!--활성화된 댓글 입력창-->
+              <div class="comment-section" style="display: none;">
+              <form method="post" action="" th:object="${storyCommentDto}">
+                    <input type="text"  th:field="*{commentContent}" placeholder="댓글을 입력하세요"/>
+                    <button type="submit">등록</button>
+              </form>
+              <!--작성된 댓글 리스트-->
+              <div class="comment-list">
+                    <a href="/story/detail" class="detail-link">댓글 더보기</a>
+              </div>
+              </div>
+         </div>
+
+          <script>
+      function goToMyStory() {
+        window.location.href = "/myStory";
+      }
+
+      // 이미지가 없으면 숨기기
+      window.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".story-image").forEach((img) => {
+          if (
+            !img.getAttribute("src") ||
+            img.getAttribute("src").trim() === ""
+          ) {
+            img.style.display = "none";
+          }
+        });
+      });
+    </script>
+
+    </div>
+    <script>
+            // 공감버튼과 공감 수 표시
+            document.addEventListener('DOMContentLoaded', 
+                function(){
+                    //모든 공감버튼 찾기 
+                    console.log('DOMContentLoaded 이벤트 발생 - 공감 버튼 찾기 시작');
+                    const likeButtons = document.querySelectorAll('.like-button');
+                })
+
+                likeButtons.forEach(button =>{
+                    button.addEventListener('click', function(){
+                        console.log('공감 버튼 클릭');
+
+                        // 클릭된 버튼의 data-story-id 속성에서 스토리 id 가져오기
+                        const storyId = this.dataset.storyId;
+                        console.log('스토리 ID:',storyId);
+
+                        //같은 스토리 카드 안에 있는 공감수 표시 span 찾기
+                        const storyCard = this.closest('.story-card');
+                        const likedCountSpan = storyCard.querySelector('.like-count');
+
+                        //현재 공감 상태를 확인
+                        const isLiked = this.classList.contains('liked');
+
+                        let currentCount = parseInt(likedCountSpan.textContent);
+                        if(isNaN(currentCount)){
+                            currentCount=0;
+                        }
+
+                      // 이미 공감한 상태면 공감 취소
+                          if(isLiked){
+                            this.classList.remove('liked');
+                            this.querySelector('span').textContent ='공감';
+                            currentCount--; // 숫자감소
+                          } else {
+                            // 공감 안한 상태면 공감(숫자증가)
+                             this.classList.add('liked');
+                             this.querySelector('span').textContent ='공감 취소';
+                             currentCount++; // 숫자증가
+                          }
+                        // 공감 수 업데이트
+                        likedCountSpan.textContent = Math.max(0,currentCount);
+                        console.log('새로운 공감 수:', likedCountSpan.textContent); 
+                    })
+                })
+
+            //스토리 댓글 오류 확인
+            function toggleComment(button){
+              console.log('toggleComment 함수 호출');
+
+              const storyCard = button.closest('.story-card');
+              console.log('스토리 카드 찾음:',storyCard);
+
+              const commentSection = storyCard.querySelector('.comment-section');
+              console.log('댓글 섹션 찾음:',commentSection);
+
+              if(commentSection){
+
+                if (commentSection.style.display === 'none'){
+                      commentSection.style.display = 'block'; //show
+                } else {
+                  commentSection.style.display = 'none';//hide
+                }
+              } else {
+                console.error('댓글 섹션을 찾을 수 없습니다!');
+              }
+            }
+          </script>
+</div>
   </body>
   <footer>
     <div class="noticeBox">
