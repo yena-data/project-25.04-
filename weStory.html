@@ -1,255 +1,396 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Story Main</title>
-
-    <style>
-       /* 상단 고정 바 */
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: linear-gradient(to bottom, #222, #333);
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 40px;
-      z-index: 999;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    /* 로고 */
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #007bff;
-    }
-
-    /* 메뉴 항목 */
-    .menu {
-      display: flex;
-      gap: 30px;
-    }
-
-    .menu a {
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>스토리 페이지</title>
+  <style>
+    .write-link {
+      display: block;
+      width: 66.66%;
+      margin: 60px auto 20px auto;
       text-decoration: none;
-      color: white;
-      font-size: 16px;
     }
 
-    .menu a:hover {
-      color: #00bfff;
-    }
-
-    /* 로그인 영역 */
-    .auth {
-      display: flex;
-      gap: 15px;
-    }
-
-    .auth button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 15px;
+    #text-input {
+      width: 100%;
+      max-width: 1100px;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 1.3em;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 40px auto 20px;
+      display: block;
       cursor: pointer;
     }
 
-    .auth button:hover {
-      color: #00bfff;
+    .main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+    .story-header {
+      font-size: 24px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 20px;
     }
 
-    /* 본문 내용(스크롤 테스트용) */
-    .content {
-      margin-top: 80px;
-      padding: 20px;
-      height: 2000px;
-      background: #f5f5f5;
+    .story-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
     }
 
-      /*스토리로 이동*/
-      .a{
-        display: block;
-        width: calc(100% / 3*2);
-        margin: 60px auto;
-        text-decoration: none;
-      }
-      #text-input{
-          width: 100%;
-          box-sizing: border-box;
-          text-align: center;
-          font-size: 1.3em;
-          padding: 20px;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          cursor: pointer;
-      }
+    .story-card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      box-sizing: border-box;
+      width: calc(50% - 10px);
+      display: flex;
+      flex-direction: column;
+    }
 
-       #footer{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        font-size: 13px;
-        color: #ccc;
-        padding: 20px;
-        border-top: 1px solid #ddd;
-        position: relative;
-        bottom: 0;
+    .login-id {
+      font-weight: bold;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .story-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+
+    .story-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+
+    .story-content {
+      font-size: 14px;
+      color: #333;
+      white-space: pre-line;
+      margin-bottom: 10px;
+    }
+
+    .hashtags {
+      color: #007acc;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 14px;
+      margin-top: auto;
+    }
+    
+    .actions span {
+      cursor: pointer;
+      color: #666;
+    }
+
+    .like-button,
+    .comment-button {
+      cursor: pointer;
+      color: #666;
+    }
+
+    .comments {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .comment {
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 4px;
+    }
+
+    .more-comments {
+      font-size: 13px;
+      color: #007acc;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+     @media screen and (max-width: 768px) {
+      .story-card {
         width: 100%;
       }
-	 #footer .noticeBox h3{
-	 	border-bottom :1px solid;
-	 	overflow : hidden;
-	 	padding : 4px 0;
-	 	line-height:17px;
-	 }
-	 #footer .guidMenu{
-	 	overflow : hidden;
-	 	text-size: 8px;
-	 }
-
-    </style>
-  </head>
-  <header>
-        <!--메인(모든 페이지 동일)메뉴-->
-      <nav class="Let's lets-expand-lg bg-body-teriary">
-        <div class="container-fluid">
-            <a class="lets-brand" href="main.html">Let's</a>
-        </div></nav>
-               
-
-      <!--로그인-->
-    <div id="auth-container">
-          <button id="user-status">로그인</button>
-          <button id="logout-button" 
-                  style="display: none;">로그아웃
-          </button>
-    </div>
-    <!--로그인 동작-->
-    <script>
-        document.addEventListener('DOMContentLoaded',()=>{
-            const userStatusSpan = document.getElementById('user-status');
-            const logoutButton = document.getElementById('logout-button');
-
-            //로그인 상태에 따라 변경됨
-            function updateAuthDisplay(){
-                const loggedInUser = localStorage.getItem('loggedInUser');
-
-                if(loggedInUser){
-                    //로그인 상태일 경우
-                    userStatusSpan.textContent = loggedInUser;
-                    logoutButton.style.display ='inline-block';
-                    userStatusSpan.style.cursor ='pointer';
-                } else {
-                    //로그아웃 상태일 경우
-                    userStatusSpan.textContent ='로그인';
-                    logoutButton.style.display ='none';
-                    userStatusSpan.style.cursor ='pointer';
-                }
-            }
-            userStatusSpan.addEventListener('click',()=>{
-              const loggedInUser = localStorage.getItem('loggedInUser');
-
-              if(loggedInUser){
-                //로그인 상태일 경우 마이페이지로 이동
-                window.location.href ='/myStory.html'
-              } else {
-                  //로그아웃 상태일 경우 로그인처리
-                  const userId = prompt('사용자 ID를 입력하세요');
-                  const userPw = prompt('사용자 PW를 입력하세요.');
-
-                  if(userId){
-                      localStorage.setItem('loggedInUser',userId);
-                      updateAuthDisplay();
-                      alert('${userId}님, 반갑습니다😃');
-                  }else{
-                      //입력 취소
-                      alert('로그인이 취소되었습니다');
-                  }
-              }
-            })
-            // 로그아웃
-            logoutButton.addEventListener('click',()=>{
-                localStorage.removeItem('loggedInUser');
-                updateAuthDisplay();
-                alert('로그아웃되었습니다');
-            })
-            //초기 로그인 상태로 복구
-            updateAuthDisplay();
-        })
-    </script>
-     <div class="main-menu">
-                  <nav>
-                    <button type="button" onclick="location.href='/weStory.html'">스토리</button>
-                    <button type="button" onclick="location.href='/community'">커뮤니티</button>
-                    <button type="button" onclick="location.href='/benefits'">여행혜택</button>
-                  </nav>
-      </div>
-  </header>
-  <body>
-        <!--스토리 작성 초기 화면-->
-      <a href="/weUpload.html" style="text-decoration: none;">
-        <input
-          id="text-input"
-          type="text"
-          placeholder="당신의 이야기를 기다리고 있어요.▶️"
-          onclick="clearInPut(this)"
-          readonly 
-          style="cursor: pointer;"
-          />
-        </input><br>
-      </a>
-          
-      <script>
-          function clearInPut(el){
-              if(el.value === "당신의 이야기를 기다리고 있어요.")
-              el.value="";
-          }
-      </script>
+    }
     
-      <!--다른 사용자들의 스토리 이미지-->
-      <div class="others-img">
-            <img src="/image/travel1.jpg" width="150" height="100" />
-            <img src="/image/travel2.jpg" width="150" height="100" />
-            <img src="/image/travel3.jpg" width="150" height="100" />
-            <img src="/image/travel4.jpg" width="150" height="100" />
-            <img src="/image/travel5.jpg" width="150" height="100" />
-      </div>
-      
-      <!--금주 인기 스토리-->
-        <div class="popular-story">
+    /* 팝업 오버레이 (처음엔 숨김) */
+.modal-overlay {
+  display: none; /* 처음에는 숨겨놔요 */
+  position: fixed; /* 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* 반투명 검정 배경 */
+  justify-content: center; /* 내용을 가운데 정렬 - flexbox 또는 grid 필요 */
+  align-items: center; /* 내용을 세로 가운데 정렬 - flexbox 또는 grid 필요 */
+  z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 높게 설정 */
+  /* 아래 두 줄은 가운데 정렬을 위해 추가 (필요에 따라 display: flex 사용) */
+  display: flex; /* 이것으로 가운데 정렬 활성화 */
+}
 
+/* 팝업 내용 영역 */
+.modal-content {
+  background-color: #fff; /* 하얀 배경 */
+  padding: 20px;
+  border-radius: 8px; /* 모서리를 둥글게 */
+  width: 90%; /* 너비 */
+  max-width: 500px; /* 최대 너비 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+  position: relative; /* 닫기 버튼 위치 조정을 위해 */
+  max-height: 80vh; /* 화면 높이의 80%를 넘지 않도록 */
+  overflow-y: auto; /* 내용이 넘치면 스크롤바 생성 */
+}
+
+/* 닫기 버튼 */
+.close-button {
+  position: absolute; /* modal-content 기준 위치 설정 */
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer; /* 마우스 오버 시 손가락 모양 */
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #777; /* 마우스 오버 시 색상 변경 */
+}
+
+/* 팝업이 보일 때 */
+.modal-overlay.visible {
+    display: flex; /* JavaScript에서 이 클래스를 추가해서 보이게 할 거야 */
+}
+
+/* 댓글 목록 영역 스타일 (선택 사항) */
+#comments-area {
+    margin-top: 15px;
+    /* 댓글 목록 스타일을 여기에 추가할 수 있어 */
+}
+  </style>
+</head>
+<body>
+  <th:block th:replace="story/mainMenu :: mainMenu"></th:block>
+
+  <a href="/weUpload" class="write-link">
+    <input id="text-input" type="text" placeholder="당신의 이야기를 기다리고 있어요. 👉" onclick="clearInPut(this)" readonly />
+  </a>
+
+  <div class="main-content">
+    <div class="story-header">우리의 스토리</div>
+
+    <div class="story-container">
+      <div class="story-card" th:each="story : ${cardList}"
+           onclick="window.location.href = '[[@{/story/detail(id=${story.storyId})}]]'" style="cursor: pointer;">
+        <div class="login-id" th:text="'@' + ${story.loginId}">아이디</div>
+        <div class="story-title" th:text="${story.storyTitle}">스토리 제목</div>
+
+        <!-- 이미지가 있는 경우만 출력 -->
+<img class="story-image"
+     th:if="${story.storyImgUrl != null and !#strings.isEmpty(story.storyImgUrl)}"
+     th:src="${story.storyImgUrl}" alt="story image" />
+
+        <!-- 항상 출력되는 내용 -->
+        <div class="story-content" th:text="${story.storyContent}">내용</div>
+
+        <!-- 해시태그 출력 -->
+        <div class="hashtags" th:if="${story.hashTags != null}">
+          <span th:each="tag : ${story.hashTags}" th:text="'#' + ${tag} + ' '"></span>
         </div>
+
+        <div class="actions">
+          <span class="like-button" th:data-id="${story.storyId}" th:text="${story.isLike} ? '💗 공감취소' : '💗 공감'"></span>
+          <span class="like-count" th:text="${story.likes}">0</span>
+          <span class="comment-button" onclick="toggleComment(this)">💬 댓글쓰기</span>
+        </div>
+
+        <div class="comments comment-section">
+          <form method="post" th:object="${storyCommentDto}"  action="/comment">
+          	<input type="hidden" name="storyId"  th:value="${story.storyId}">
+            <input type="text" th:field="*{commentContent}" placeholder="댓글을 입력하세요" />
+            <button type="submit">등록</button>
+          </form>
+          <div class="comment-list">
+			    <a href="/story/detail" class="more-comments">댓글 더보기</a>
+			</div>
+			
       </div>
-
-      <footer>
-    <div class="noticeBox">
-	 		<h3 class="title">공지사항</h3>
-	 		<h1 class="content">여행일정 사이트 업데이트 진행(~5.15)</h1>
-	 	</div>
-
-    <div class="guidMenu">
-      <nav>
-        <a href="/tripPlanneer">여행플래너</a>
-        <a href="/announcement">공지사항</a>
-        <a href="/privacyPolicy">개인정보처리방침</a>
-        <a href="/customerServiceCenter">고객센터</a>
-      </nav>
     </div>
+  </div>
 
-    <div class="cs">
-      <nav>
-        <a href="/termsOfUse">이용약관</a>
-        <a href="/termsOfUseForLocationBasedServices">위치기반서비스 이용약관</a>
-        <a href="/copyrightProtectionPolicy">저작권 보호정책</a>
-        <a href="/customerServiceSite">고객서비스현장</a>
-        <a href="/refusalOfUnauthorizedCollectionOdEmail">전자우편 무단수집거부</a>
-      </nav>
-    </div>
-    </footer>
-  </body>
+  <th:block th:replace="story/mainFooter :: mainFooter"></th:block>
+
+  <script>
+    function clearInPut(el) {
+      if (el.value === "당신의 이야기를 기다리고 있어요.") el.value = "";
+    }
+    
+    function goToMyStory() {
+        window.location.href = "/myStory";
+      }
+
+    function toggleComment(button) {
+      const storyCard = button.closest(".story-card");
+      const commentSection = storyCard.querySelector(".comment-section");
+      if (commentSection) {
+        commentSection.style.display =
+          commentSection.style.display === "none" || commentSection.style.display === ""
+            ? "block"
+            : "none";
+      }
+    }
+    
+   // 댓글 더보기 
+   document.addEventListener('DOMContentLoaded', function() {
+    // 필요한 요소들을 가져와요 (이전과 동일)
+    const moreCommentsLink = document.querySelector('.more-comments');
+    const commentModal = document.getElementById('comment-modal');
+    const closeButton = commentModal.querySelector('.close-button');
+    const commentsArea = document.getElementById('comments-area');
+
+    // '댓글 더보기' 버튼 클릭 이벤트 리스너
+    if (moreCommentsLink) {
+        moreCommentsLink.addEventListener('click', function(event) {
+            event.preventDefault(); // 기본 링크 이동 막기
+
+            // 팝업창
+            commentModal.classList.add('visible');
+
+            // 팝업창이 나타날 때 댓글
+            loadComments(); // 댓글을 불러오는 함수 호출
+
+            console.log('팝업창을 보이게 하고 댓글을 불러오는 중...');
+        });
+    }
+
+    // 닫기 버튼 클릭 이벤트 리스너 (이전과 동일)
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            commentModal.classList.remove('visible');
+            // 팝업 닫을 때 댓글 목록을 비우기
+            commentsArea.innerHTML = "<p>댓글을 불러오는 중...</p>"; 
+            console.log('팝업창을 닫았어요.');
+        });
+    }
+
+    // 팝업 오버레이 배경 클릭 시 닫기 (선택 사항, 이전과 동일)
+    if (commentModal) {
+        commentModal.addEventListener('click', function(event) {
+            if (event.target === commentModal) {
+                commentModal.classList.remove('visible');
+                commentsArea.innerHTML = "<p>댓글을 불러오는 중...</p>";
+                console.log('팝업 오버레이 배경을 클릭하여 팝업을 닫았어요.');
+            }
+        });
+    }
+
+    // Esc 키 눌렀을 때 팝업 닫기 (선택 사항, 이전과 동일)
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && commentModal.classList.contains('visible')) {
+            commentModal.classList.remove('visible');
+            commentsArea.innerHTML = "<p>댓글을 불러오는 중...</p>";
+            console.log('Esc 키를 눌러 팝업을 닫았어요.');
+        }
+    });
+
+    // === 댓글 데이터를 불러오는 비동기 함수 ===
+    function loadComments() {
+        
+        const commentsApiUrl = 'https://jsonplaceholder.typicode.com/posts/1/comments'; 
+
+        // 댓글 로딩 시작 시 메시지 표시
+        commentsArea.innerHTML = "<p>댓글을 불러오는 중...</p>";
+
+        // Fetch API를 사용하여 데이터 가져오기
+        fetch(commentsApiUrl)
+            .then(response => {
+                // HTTP 응답 상태 확인
+                if (!response.ok) {
+                    // 응답이 성공적이지 않으면 에러를 발생시켜 catch 블록으로 넘겨요
+                    throw new Error('HTTP error! status: ' + response.status);
+                }
+               
+                return response.json();
+            })
+            .then(comments => {
+                // JSON 파싱이 완료되면 댓글 데이터
+                console.log('댓글 데이터를 성공적으로 불러왔어요:', comments);
+
+                // commentsArea를 비워주고 새로운 댓글 목록
+                commentsArea.innerHTML = ''; // 이전 내용 삭제
+
+                if (comments && comments.length > 0) {
+                    // 댓글 데이터가 있다면 목록
+                    let commentsHtml = '';
+                    comments.forEach(comment => {
+                      
+                        commentsHtml += `
+                            <div class="comment">
+                                <strong>${comment.name}</strong> (${comment.email})<br>
+                                <p>${comment.body}</p>
+                            </div>
+                            <hr> <!-- 댓글 구분선 -->
+                        `;
+                    });
+                    commentsArea.innerHTML = commentsHtml; 
+
+                } else {
+                    // 댓글 데이터가 없을 경우 메시지 표시
+                    commentsArea.innerHTML = "<p>아직 작성된 댓글이 없습니다.</p>";
+                }
+            })
+            .catch(error => {
+                // 데이터 가져오기나 처리 과정에서 에러가 발생
+                console.error('댓글 데이터를 불러오는 중 에러 발생:', error);
+                commentsArea.innerHTML = "<p>댓글을 불러오는 데 실패했습니다. 잠시 후 다시 시도해주세요.</p>";
+            });
+    }
+});
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // 공감 버튼 클릭 처리
+      document.querySelectorAll(".like-button").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const card = this.closest(".story-card");
+          const countSpan = card.querySelector(".like-count");
+          let count = parseInt(countSpan.textContent) || 0;
+          if (this.classList.contains("liked")) {
+            this.classList.remove("liked");
+            this.textContent = "💗 공감";
+            count--;
+          } else {
+            this.classList.add("liked");
+            this.textContent = "💗 공감취소";
+            count++;
+          }
+          countSpan.textContent = Math.max(0, count);
+        });
+      });
+    });
+  </script>
+</body>
 </html>
